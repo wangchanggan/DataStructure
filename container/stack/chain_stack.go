@@ -1,15 +1,13 @@
 package stack
 
-import "errors"
-
 type Element struct {
-	next *Element
+	next  *Element
 	Value interface{}
 }
 
 type ChainStack struct {
-	top  *Element
-	len  int
+	top *Element
+	len int
 }
 
 func (cs *ChainStack) Init() *ChainStack {
@@ -38,15 +36,13 @@ func (cs *ChainStack) Push(v interface{}) {
 	cs.len++
 }
 
-func (cs *ChainStack) Pop() (v interface{}, err error) {
-	if cs.Empty() {
-		return nil, errors.New("empty chain stack")
+func (cs *ChainStack) Pop() (v interface{}) {
+	if !cs.Empty() {
+		v = cs.top.Value
+		node := cs.top
+		cs.top = node.next
+		cs.len--
 	}
-
-	v = cs.top.Value
-	node := cs.top
-	cs.top = node.next
-	cs.len--
 
 	return
 }
